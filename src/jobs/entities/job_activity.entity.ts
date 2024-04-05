@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Job } from "./job.entity";
 import { SubMenu } from "src/menus/entities/submenu.entity";
 
@@ -8,10 +8,18 @@ export class JobActivity{
     id:number
 
     @ManyToOne(() => Job,job => job.id)
+    @JoinColumn({name:"jobIdId"})
     job_id:number
-
+    
     @ManyToOne(() => SubMenu,submenu => submenu.id)
+    @JoinColumn({name:"submenuIdId"})
     submenu_id:number
+
+    @Column({type:"int"})
+    jobIdId:number
+    
+    @Column({type:"int"})
+    submenuIdId:number
 
     @Column({type:"varchar",length:128})
     created_by:string

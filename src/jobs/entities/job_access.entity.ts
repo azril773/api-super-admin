@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Job } from "./job.entity";
 import { User } from "src/users/entities/user.entity";
 
@@ -8,10 +8,19 @@ export class JobAccess{
     id:number
     
     @ManyToOne(() => User,user => user.id)
+    @JoinColumn({name:"userIdId"})
     user_id:number
-
+    
+    @Column({type:"int"})
+    userIdId:number
+    
     @ManyToOne(() => Job,job => job.id)
+    @JoinColumn({name:"jobIdId"})
     job_id:number
+    
+    @Column({type:"int"})
+    jobIdId:number
+
 
     @Column({type:"varchar",length:128})
     created_by:string
@@ -19,12 +28,12 @@ export class JobAccess{
     @Column({type:"varchar",length:128})
     updated_by:string
 
-    @Column({type:"timestamp", default: () => "current_timestamp()"})
+    @CreateDateColumn()
     created_at:Date
 
-    @Column({type:"timestamp", default: () => "current_timestamp()"})
+    @UpdateDateColumn()
     updated_at:Date
     
-    @Column({type:"timestamp", default: () => "current_timestamp()"})
+    @DeleteDateColumn()
     deleted_at:Date
 }

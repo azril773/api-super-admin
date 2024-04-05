@@ -39,8 +39,14 @@ export class JobsService {
     return await repo.save(data,{})
   }
 
-  async remove(id: number) {
-    return await this.ds.getRepository(Job).softDelete({
+  async remove(id: number,name:string) {
+    const repo = this.ds.getRepository(Job)
+    await repo.update({
+      id:+id
+    },{
+      updated_by:name
+    })
+    return await repo.softDelete({
       id:+id
     })
   }

@@ -1,5 +1,5 @@
 import { Role } from "src/roles/entities/role.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({name:"users"})
 export class User {
@@ -7,7 +7,11 @@ export class User {
     id:number
 
     @ManyToOne(() => Role,role => role.id)
+    @JoinColumn({name:"roleIdId"})
     role_id:number
+
+    @Column({type:"int"})
+    roleIdId:number
 
     @Column({type:"varchar",length:128})
     name:string
@@ -15,7 +19,7 @@ export class User {
     @Column({type:"varchar",length:255,nullable:true,default:""})
     picture:string
 
-    @Column({type:"varchar",length:128,nullable:false})
+    @Column({type:"varchar",length:128,nullable:false,unique:true})
     username:string
 
     @Column({type:"varchar",length:255,nullable:false})

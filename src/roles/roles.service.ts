@@ -39,7 +39,15 @@ export class RolesService {
     return await repo.save(data)
   }
 
-  async remove(id: number) {
-    return await this.ds.getRepository(Role).delete({id:+id}) 
+  async remove(id: number,name:string) {
+    const repo = this.ds.getRepository(Role)
+    await repo.update({
+      id:+id
+    },{
+      updated_by:name
+    })
+    return await repo.softDelete({
+      id:+id
+    })
   }
 }

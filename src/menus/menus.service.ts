@@ -33,16 +33,22 @@ export class MenusService {
     if(data.length <= 0) throw new BadRequestException("Menu not found")
     data[0]["name"] = updateMenuDto["name"]
     data[0]["url"] = updateMenuDto["url"]
-    data[0]["icon"] = updateMenuDto["icon"]
+    data[0]["icon"] = updateMenuDto["icon"] ? updateMenuDto["icon"] : data[0].icon
     data[0]["type"] = updateMenuDto["type"]
     data[0]["updated_by"] = name
     data[0]["updated_at"] = newDateLocal()
     return await repo.save(data,{})
   }
 
-  async remove(id: number) {
-    return await this.ds.getRepository(Menu).delete({
-      id:id
+  async remove(id: number,name:string) {
+    const repo = this.ds.getRepository(Menu)
+    await repo.update({
+      id:+id
+    },{
+      updated_by:name
+    })
+    return await repo.softDelete({
+      id:+id
     })
   }
 }

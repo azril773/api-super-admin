@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Menu } from "./menu.entity";
 
 @Entity({name:"submenus"})
@@ -7,7 +7,11 @@ export class SubMenu{
     id:number
 
     @ManyToOne(() => Menu,(menu) => menu.id)
+    @JoinColumn({name:"menuIdId"})
     menu_id:number
+
+    @Column({nullable:false})
+    menuIdId:number
 
     @Column({type:"varchar",length:128})
     name:string
