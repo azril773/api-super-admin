@@ -1,9 +1,9 @@
 import { Mapel } from "src/mapel/entity/mapel.entity";
 import { StudentClass } from "src/student/student-class/entities/student-class.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity({name:"pg"})
+@Entity({name:"task_pg"})
 export class Pg {
     @PrimaryGeneratedColumn({type:"bigint"})
     id:number 
@@ -14,27 +14,36 @@ export class Pg {
     @Column({type:"varchar", length:255,nullable:false})
     task:string
 
+    @OneToMany(() => User,user => user.id)
+    @JoinColumn({name:"userIdId"})
+    user_id:number
+
+    @Column({type:"int",nullable:false})
+    userIdId:number
+
+    @Column({type:"timestamp",nullable:false})
+    deadline:Date
+
     @Column({type:"enum",enum:["essay"]})
     type:string
 
-    @Column({type:"string"})
+    @Column({type:"varchar",length:180,nullable:false   })
     a:string
 
-    @Column({type:"string"})
+    @Column({type:"varchar",length:180,nullable:false   })
     b:string
 
-    @Column({type:"string"})
+    @Column({type:"varchar",length:180,nullable:false   })
     c:string
 
-    @Column({type:"string"})
+    @Column({type:"varchar",length:180,nullable:true})
     d:string
 
-    @Column({type:"string"})
+    @Column({type:"varchar",length:180,nullable:true})
     e:string
 
     @Column({type:"enum",nullable:false,enum:["a","b","c","d","e"]})
     correct_answer:string
-
 
     @Column({type:"varchar", length:100,nullable:true})
     kode:string 
@@ -52,14 +61,6 @@ export class Pg {
 
     @Column({type:"int"})
     mapelIdId:number
-
-
-
-    @Column({type:"varchar",length:128})
-    created_by:string
-
-    @Column({type:"varchar",length:128})
-    updated_by:string
 
     @CreateDateColumn()
     created_at:Date

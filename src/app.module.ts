@@ -44,6 +44,7 @@ import { StudentClass } from './student/student-class/entities/student-class.ent
 import { Student } from './student/student/entities/student.entity';
 import { MapelModule } from './mapel/mapel.module';
 import { Mapel } from './mapel/entity/mapel.entity';
+import { Pg } from './tasks/pg/entities/pg.entity';
 
 @Module({
   imports: [ServeStaticModule.forRoot({ 
@@ -55,7 +56,7 @@ import { Mapel } from './mapel/entity/mapel.entity';
       username: 'root',
       password: '',
       database: 'super_admin',
-      entities: [Class,Periode,StudentClass,Role,Menu,SubMenu,Job,JobAccess,User,JobActivity,Task,Answer,Absent,MasterClass,Student,Mapel], 
+      entities: [Class,Periode,StudentClass,Role,Menu,SubMenu,Job,JobAccess,User,JobActivity,Task,Answer,Absent,MasterClass,Student,Mapel,Pg], 
       synchronize: true
   }), MenusModule,SubmenuModule, JobsModule, UsersModule, JwtModule, JobAccessesModule,JobActivitiesModule,AuthModule,ImageModule,TestModule, TasksModule, AnswersModule, PgModule,DatabaseModule, AbsentModule, PeriodeModule, ClassModule, MasterClassModule, StudentClassModule, StudentModule,MapelModule],
   controllers: [],

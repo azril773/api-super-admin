@@ -98,21 +98,6 @@ export class TasksController {
     return await this.tasksService.findAll(jwts.name);
   }
 
-  @Get("/student/task")
-  @AuthorDec([105])
-  @ResCode(201, "Success get all task", [])
-  async findAllStudent(@Req() req:Request) {
-    const jwts = this.decrypt(req)
-    return await this.tasksService.findAll(jwts.name);
-  }
-
-  @Get('/student/task/:id')
-  @AuthorDec([105])
-  @ResCode(201, "Success get a task", [])
-  async findOneStudent(@Param('id') id: string,@Req() req:Request) {
-    const jwts = this.decrypt(req)
-    return await this.tasksService.findOne("id", +id,jwts.name);
-  }
 
   @Get(':id')
   @AuthorDec([105])

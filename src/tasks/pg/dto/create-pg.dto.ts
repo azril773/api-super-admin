@@ -1,57 +1,9 @@
-import { IsArray, IsDateString, IsEnum, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString, isArray } from "class-validator";
-
-class Result {
-    @IsString()
-    @IsNotEmpty()
-    title:string
-
-    @IsString()
-    @IsNotEmpty()
-    name:string
-
-    @IsString()
-    @IsNotEmpty()
-    @IsEnum(["a","b","c","d","e"],{message:"correct_answer must be one of the following values: a,b,c,d,e"})
-    correct_answer:string
-
-    @IsObject()
-    @IsNotEmpty()
-    answers:Option[]
-    
-}
-
-class Option {
-    @IsString()
-    @IsNotEmpty()
-    a:string
-
-    @IsString()
-    @IsNotEmpty()
-    b:string
-
-    @IsString()
-    @IsNotEmpty()
-    c:string
-
-    @IsString()
-    @IsNotEmpty()
-    d:string
-
-    @IsString()
-    @IsNotEmpty()
-    e:string
-
-}
-
+import { IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator"
 
 export class CreatePgDto {
     @IsString()
     @IsNotEmpty()
     title:string
-
-    @IsNumber()
-    @IsNotEmpty()
-    amount:number
     
     @IsString()
     @IsNotEmpty()
@@ -71,8 +23,24 @@ export class CreatePgDto {
     deadline:Date
     
     @IsNotEmpty()
-    @IsArray()
-    result:Result
+    @IsString()
+    a:string
+
+    @IsNotEmpty()
+    @IsString()
+    b:string
+
+    @IsNotEmpty()
+    @IsString()
+    c:string
+
+    @IsNotEmpty()
+    @IsOptional()
+    d:string
+
+    @IsNotEmpty()
+    @IsOptional()
+    e:string
 
 }
 

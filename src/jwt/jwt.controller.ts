@@ -38,6 +38,8 @@ export class JwtController {
   decryptToken(@Body("jwt") jwt:string) {
     const decrypt = decryptJwt(jwt)
     // if(Object.keys(decrypt).includes("response") &&)
+      console.log(Object.keys(decrypt))
+    if( Object.keys(decrypt).includes("expiredAt")) throw new UnauthorizedException("jwt expired")
     if(Object.keys(decrypt).includes("response") || Object.keys(decrypt).includes("message")) throw new UnauthorizedException(decrypt.response.message)
     // console.log(decrypt,"controller")
     return decrypt
@@ -47,6 +49,12 @@ export class JwtController {
   @SetMetadata("msg","Success decrypt token")
   encrypt(@Body("name") name:string) {
     return generateJwt({name},+process.env.EXPIRED_ACCESS_JWT)
+  }
+
+  @Post("/encrypt/student")
+  @SetMetadata("msg","Success encrypt token")
+  encryptStudent(@Body() {name,idKelas,expired}) {
+    return generateJwt({name,idKelas},+expired)
   }
 
 }

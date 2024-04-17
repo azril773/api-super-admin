@@ -41,25 +41,25 @@ export class AnswersController {
     return jwts
   }
 
-  @Post()
-  @AuthorDec([105])
-  @ResCode(201,"Success create a answer",[])
-  async create(@Body() createAnswerDto: CreateAnswerDto,@Req() req:Request) {
-    const jwts = this.decrypt(req)
-    const task = await this.ds.getRepository(Task).findBy({id:createAnswerDto.task_id})
-    if(task.length <= 0) throw new BadRequestException("Task not found")
+  // @Post()
+  // @AuthorDec([105])
+  // @ResCode(201,"Success create a answer",[])
+  // async create(@Body() createAnswerDto: CreateAnswerDto,@Req() req:Request) {
+  //   const jwts = this.decrypt(req)
+  //   const task = await this.ds.getRepository(Task).findBy({id:createAnswerDto.task_id})
+  //   if(task.length <= 0) throw new BadRequestException("Task not found")
 
-    const user = await this.ds.query("SELECT * FROM users JOIN roles ON users.roleIdId=roles.id WHERE users.id=? AND roles.name=? AND users.deleted_at IS NULL",[createAnswerDto.user_id,"siswa"])
-    if(user.length <= 0) throw new BadRequestException("Only student can answer the task")
-    await this.check(+createAnswerDto.user_id,+createAnswerDto.task_id)
+  //   const user = await this.ds.query("SELECT * FROM users JOIN roles ON users.roleIdId=roles.id WHERE users.id=? AND roles.name=? AND users.deleted_at IS NULL",[createAnswerDto.user_id,"siswa"])
+  //   if(user.length <= 0) throw new BadRequestException("Only student can answer the task")
+  //   await this.check(+createAnswerDto.user_id,+createAnswerDto.task_id)
 
-    createAnswerDto["created_by"] = jwts.name
-    createAnswerDto["taskIdId"] = createAnswerDto.task_id
-    createAnswerDto["userIdId"] = createAnswerDto.user_id
-    createAnswerDto["updated_by"] = jwts.name
-    return await this.answersService.create(createAnswerDto)
+  //   createAnswerDto["created_by"] = jwts.name
+  //   createAnswerDto["taskIdId"] = createAnswerDto.task_id
+  //   createAnswerDto["userIdId"] = createAnswerDto.user_id
+  //   createAnswerDto["updated_by"] = jwts.name
+  //   return await this.answersService.create(createAnswerDto)
 
-  }
+  // }
 
   @Post("/findAll")
   @AuthorDec([105])
@@ -92,23 +92,23 @@ export class AnswersController {
     return await this.answersService.findOne("id",+id);
   }
   
-  @Patch(':id')
-  @AuthorDec([105])
-  @ResCode(201,"Success update a answer",[])
-  async update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto,@Req() req:Request) {
-    const answer = await this.ds.getRepository(Answer).findBy({id:+id})
-    if(answer.length <= 0) throw new BadRequestException("Answer not found")
-    const jwts = await this.decrypt(req)
-    updateAnswerDto["updated_by"] = jwts.name
-    updateAnswerDto["updated_at"] = newDateLocal()
-    return await this.answersService.update(+id,updateAnswerDto)
-  }
+  // @Patch(':id')
+  // @AuthorDec([105])
+  // @ResCode(201,"Success update a answer",[])
+  // async update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto,@Req() req:Request) {
+  //   const answer = await this.ds.getRepository(Answer).findBy({id:+id})
+  //   if(answer.length <= 0) throw new BadRequestException("Answer not found")
+  //   const jwts = await this.decrypt(req)
+  //   updateAnswerDto["updated_by"] = jwts.name
+  //   updateAnswerDto["updated_at"] = newDateLocal()
+  //   return await this.answersService.update(+id,updateAnswerDto)
+  // }
   
-  @Delete(':id')
-  @AuthorDec([105])
-  @ResCode(201,"Success delete a answer",[])
-  async remove(@Param('id') id: string,@Req() req:Request) {
-    const jwts = await this.decrypt(req)
-    return this.answersService.remove(+id,jwts.name);
-  }
+  // @Delete(':id')
+  // @AuthorDec([105])
+  // @ResCode(201,"Success delete a answer",[])
+  // async remove(@Param('id') id: string,@Req() req:Request) {
+  //   const jwts = await this.decrypt(req)
+  //   return this.answersService.remove(+id,jwts.name);
+  // }
 }
